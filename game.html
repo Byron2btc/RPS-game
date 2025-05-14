@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lesson4.css">
+</head>
+<body>
+    <section class="score-panel">
+        <div class="score-con">
+            <p><span id="user-name">UserName: </span>: <span id="user-score">userScore</span></p>
+            <p><span id="computer-name">ComputerName: </span>: <span id="computer-score">ComputerScore</span></p>
+        </div>
+    </section>
+    <section class="game-panel">
+        <h1 id="status">Puzzle Game</h1>
+
+        <section class="game-panel-sub">
+            <h2 id="playing">Playing..</h2>
+            <div class="btn-con">
+                <button class="btn" onclick="rock()">ROCK</button>
+                <button class="btn" onclick="paper()">PAPER</button>
+                <button class="btn" onclick="scissors()">SCISSORS</button>
+                
+            </div>
+            <h4 id="remark"></h4>
+        </section>
+    </section>
+
+    <script>
+        // let playersName = localStorage.getItem(PlayersName);
+        // let playersName = JSON.parse(playersName);
+
+        // userName = playersName.userName || prompt("Enter Your name");
+        // computerName = playersName.computerName || prompt("Enter Computer name");
+
+        userName = prompt("Enter Your name");
+        computerName = prompt("Enter Computer name");
+
+        // const playersName = {
+        //     userName : usersName,
+        //     computerName : computersname
+        // }
+
+        // playersName.userName = userName
+        // playersName.computerName = computerName
+
+        // localStorage.setItem("PlayersName", JSON.stringify(playersname))
+
+
+        // let userName = prompt("Enter Your name");
+        // let computerName = prompt("Enter computer name: ")
+
+
+        let score = {
+            userScore: 0,
+            computerScore: 0
+        }
+
+        const status = document.querySelector("#status")
+        const displayUserName = document.querySelector("#user-name");
+        const displayComputerName = document.querySelector("#computer-name");
+        const displayUserScore = document.querySelector("#user-score");
+        const displayComputerScore = document.querySelector("#computer-score");
+        const h2 = document.querySelector("#playing");
+        const remark = document.querySelector("#remark");
+
+        UpdateDataToBegin();
+
+        function UpdateDataToBegin(){
+            h2.innerHTML = `Playing as ${userName}`;
+            displayUserName.innerHTML = userName;
+            displayComputerName.innerHTML = computerName;
+            updateDisplayScore();
+        }
+
+        function updateDisplayScore(){
+            displayUserScore.innerHTML = score.userScore;
+            displayComputerScore.innerHTML = score.computerScore;
+        }
+
+        function rock(){
+            usersChoice = "rock";
+            computerChoice = ComputerChoice();
+
+            if(computerChoice == "rock"){
+                //draw
+                message(usersChoice, computerChoice, "Draw")
+            }
+            else if(computerChoice == "paper"){
+                //lose
+                score.computerScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Lose")
+            }
+            else if(computerChoice == "scissors"){
+                //win
+                score.userScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Win")
+            }
+
+            UpdateStatus();
+        }
+
+        function paper(){
+            usersChoice = "paper";
+            computerChoice = ComputerChoice();
+
+            if(computerChoice == "rock"){
+                //win
+                score.userScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Win")
+            }
+            else if(computerChoice == "paper"){
+                //draw
+                message(usersChoice, computerChoice, "Draw")
+            }
+            else if(computerChoice == "scissors"){
+                //lose
+                score.computerScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Lose")
+            }
+
+            UpdateStatus();
+        }
+
+        function scissors(){
+            usersChoice = "scissors";
+            computerChoice = ComputerChoice();
+
+            if(computerChoice == "rock"){
+                //lose
+                score.computerScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Lose")
+            }
+            else if(computerChoice == "paper"){
+                //win
+                score.userScore += 1;
+                updateDisplayScore();
+                message(usersChoice, computerChoice, "Win")
+            }
+            else if(computerChoice == "scissors"){
+                //draw
+                message(usersChoice, computerChoice, "Draw")
+            }
+
+            UpdateStatus();
+        }
+
+        function UpdateStatus(){
+            if(score.userScore > score.computerScore){
+                status.innerHTML = "Winning"
+            }
+            else if(score.userScore == score.computerScore){
+                status.innerHTML = "Draw"
+            }
+            else{
+                status.innerHTML = "Losing"
+            }
+        }
+        function ComputerChoice(){
+            computerChoice = Math.floor(Math.random() * 3);
+            let com;
+
+            if(computerChoice == 0){
+                com = "rock"
+            }
+            else if(computerChoice == 1){[]
+                com = "paper"
+            }
+            else if(computerChoice == 2){
+                com = "scissors"
+            }
+            return com;
+        }
+
+        function message(userCho, computerCho, remarked){
+            remark.innerHTML = `${userName} : ${userCho} -- ${computerName}: ${computerCho} -- ${remarked}`
+        }
+    </script>
+</body>
+</html>   
